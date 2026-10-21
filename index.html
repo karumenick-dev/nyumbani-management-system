@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nyumbani Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!----- Left Sidebar Navigation ----->
+        <aside class="sidebar">
+            <h2 class="logo">Nyumbani Admin</h2>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">Dashboard</a>
+                <a href="#" class="nav-item">Tenant Roster</a>
+                <a href="#" class="nav-item">Rent & Arrears</a>
+                <a href="#" class="nav-item">Residential Defects</a>
+            </nav>
+        </aside>
+
+        <!----- Main Workspace Area ----->
+        <main class="main-workspace">
+            
+            <!-- Top Header Bar -->
+            <header class="top-header">
+                <h1 class="page-title">Dashboard Overview</h1>
+                <button id="add-tenant-btn" class="btn-primary">+ Add Tenant</button>
+            </header>
+
+            <!----- Top Metric Cards Row ----->
+            <section class="metrics-grid">
+                <div class="metric-card">
+                    <span class="card-title">Total Units</span>
+                    <h3 class="card-value" id="total-units-count">--/16</h3>
+                </div>
+                <div class="metric-card">
+                    <span class="card-title">Rent Collected</span>
+                    <h3 class="card-value" id="rent-collected-value">KSH 0</h3>
+                </div>
+                <div class="metric-card">
+                    <span class="card-title">Pending Arrears</span>
+                    <h3 class="card-value text-danger" id="pending-arrears-value">KSH 0</h3>
+                </div>
+                <div class="metric-card">
+                    <span class="card-title">Active Defects</span>
+                    <h3 class="card-value text-warning" id="active-defects-count">0 Issues</h3>
+                </div>
+            </section>
+
+            <!----- Tenant Roster Table Section ----->
+            <section class="table-container">
+                <table class="tenant-table">
+                    <thead>
+                        <tr>
+                            <th>Unit Number</th>
+                            <th>Tenant Name</th>
+                            <th>Contact Details</th>
+                            <th>Rent Due Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tenant-table-body">
+                        <!----- Dynamic rows will be populated here via JavaScript from JSON Server ----->
+                        <tr>
+                            <td>01</td>
+                            <td>Faith Karani</td>
+                            <td>0712345678</td>
+                            <td>Nov 30, 2026</td>
+                            <td><span class="status-badge paid">Paid</span></td>
+                            <td>Faulty Tap</td>
+                        </tr>
+                        <tr>
+                            <td>02</td>
+                            <td>Josefu Hajila</td>
+                            <td>075678910</td>
+                            <td>October 31, 2026</td>
+                            <td><span class="status-badge paid">Paid</span></td>
+                            <td>Fix Hot Shower</td>
+                        </tr>
+                        <tr>
+                            <td>03</td>
+                            <td>Irene Mkamburi</td>
+                            <td>011234567</td>
+                            <td>October 15, 2026</td>
+                            <td><span class="status-badge overdue">Overdue</span></td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+        </main>
+    </div>
+
+    <!----- Link to main entry point script (type="module" enables modular JS) ----->
+    <script type="module" src="main.js"></script>
+</body>
+</html>

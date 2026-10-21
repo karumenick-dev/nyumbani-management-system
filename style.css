@@ -1,0 +1,303 @@
+/* ==========================================================================
+   1. CSS Reset & Design Tokens (Color Palette: 3 Complementary + Neutrals)
+   ========================================================================== */
+:root {
+    /* Primary Color (Deep Trust Blue) */
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    
+    /* Secondary / Status Colors (Teal/Green for Success, Amber/Red for Alerts) */
+    --success-color: #10b981;
+    --success-bg: #d1fae5;
+    
+    --warning-color: #f59e0b;
+    --danger-color: #dc2626;
+    --danger-bg: #fee2e2;
+
+    /* Neutrals */
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --text-primary: #1e293b;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --sidebar-bg: #1e293b;
+    --sidebar-text: #f8fafc;
+
+    /* Typography & Spacing */
+    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    --border-radius: 8px;
+    --transition-speed: 0.2s ease;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f1f5f9;
+    color: #000000;
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   2. Main Layout Shell (Sidebar + Workspace Grid)
+   ========================================================================== */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+/* Left Sidebar Navigation */
+.sidebar {
+    width: 100%;
+    background-color: #b90000;
+    color: #ffffff;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.sidebar .logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #fcfdfd;
+    letter-spacing: 0.05rem;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.nav-item {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all var(--transition-speed);
+}
+
+.nav-item:hover,
+.nav-item.active {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.nav-item.active {
+    border-left: 4px solid #ffffff;
+}
+
+/* Main Workspace Area */
+.main-workspace {
+    flex-grow: 1;
+    padding: 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    overflow-y: auto;
+}
+
+/* ==========================================================================
+   3. Top Header Bar
+   ========================================================================== */
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    padding: 0.65rem 1.25rem;
+    border-radius: 2px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+/* ==========================================================================
+   4. Top Metric Overview Cards (4-Column Grid)
+   ========================================================================== */
+.metrics-grid {
+    display: flex;
+    gap: 4rem;
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.metric-card {
+    background-color: #fbfdff;
+    border: none;
+    border-radius: 2px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.metrics-grid .metric-card {
+    flex: 1;
+}
+
+.card-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #1e293b;
+}
+
+.card-value {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.text-danger {
+    color: var(--danger-color);
+}
+
+.text-warning {
+    color: var(--warning-color);
+}
+
+/* ==========================================================================
+   5. Tenant Roster Data Table Section
+   ========================================================================== */
+.table-container {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.tenant-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.tenant-table th,
+.tenant-table td {
+    padding: 1rem 1.25rem;
+    font-size: 0.9rem;
+}
+
+.tenant-table th {
+    background-color: #f1f5f9;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.tenant-table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color var(--transition-speed);
+}
+
+.tenant-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.tenant-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.65rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-badge.paid {
+    background-color: var(--success-bg);
+    color: var(--success-color);
+}
+
+.status-badge.overdue {
+    background-color: var(--danger-bg);
+    color: var(--danger-color);
+}
+
+/* Custom Action Buttons (Pill / Oval Style) */
+actions.btn-edit {
+    padding: 4px 12px;
+    margin-right: 5px;
+    background: rgba(0, 123, 255, 0.1);
+    border: 1px solid var(--primary-color, #007bff);
+    color: var(--primary-color, #007bff);
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.btn-edit:hover {
+    background: var(--primary-color, #007bff);
+    color: #fff;
+}
+
+.btn-delete {
+    padding: 4px 12px;
+    background: rgba(220, 53, 69, 0.1);
+    border: 1px solid var(--danger-color, #dc3545);
+    color: var(--danger-color, #dc3545);
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.btn-delete:hover {
+    background: var(--danger-color, #dc3545);
+    color: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

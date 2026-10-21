@@ -1,0 +1,52 @@
+{
+  "tenants": [
+    {
+    "id": "1",
+    "unit": "01",
+    "name": "Josefu Hajila",
+    "phone": "075678910",
+    "rentDueDate": "October 31, 2026",
+    "status": "Paid"
+    },
+    {
+    "id": "2",
+    "unit": "02",
+    "name": "Irene Mkamburi",
+    "phone": "011234567",
+    "rentDueDate": "October 15, 2026",
+    "status": "Overdue"
+    },
+    {
+    "id": "3",
+    "unit": "03",
+    "name": "Nicholas Karume",
+    "phone": "0712334455",
+    "rentDueDate": "Nov 30, 2026",
+    "status": "Paid"
+    },
+    {
+    "id": "4",
+    "unit": "04",
+    "name": "Moriah Evanilson",
+    "phone": "0123456789",
+    "rentDueDate": "October 30, 2026",
+    "status": "Overdue"
+      
+    }
+  ],
+  "defects": [
+    {
+    "id": "1",
+    "unit": "01",
+    "description": "Faulty tap",
+    "status": "Fixed"
+    },
+    {
+    "id": "2",
+    "unit": "02",
+    "description": "Fix hot shower",
+    "status": "In Progress"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
