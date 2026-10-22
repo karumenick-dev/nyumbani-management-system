@@ -3,22 +3,31 @@
  */
 
 /**
- * Renders the tenant roster data into the HTML table body.
- * 
- * @param {Array<Object>} tenants Array of tenant objects from the API
+ * Renders the tenant roster data into the HTML table body and sets headers.
  */
 export function renderTenantTable(tenants) {
-    const tableBody = document.getElementById('tenant-table-body');
-    
-    if (!tableBody) {
-        console.error("Table body element ('tenant-table-body') not found in DOM.");
-        return;
+    const tableContainer = document.querySelector('.tenant-table');
+    if (tableContainer) {
+        const thead = tableContainer.querySelector('thead');
+        if (thead) {
+            thead.innerHTML = `
+                <tr>
+                    <th>Unit Number</th>
+                    <th>Tenant Name</th>
+                    <th>Contact Details</th>
+                    <th>Rent Due Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            `;
+        }
     }
 
-    // Clear existing static placeholder rows
+    const tableBody = document.getElementById('tenant-table-body');
+    if (!tableBody) return;
+
     tableBody.innerHTML = '';
 
-    // Handle empty state
     if (!tenants || tenants.length === 0) {
         tableBody.innerHTML = `
             <tr>
@@ -30,11 +39,8 @@ export function renderTenantTable(tenants) {
         return;
     }
 
-    // Loop through each tenant and construct their table row
     tenants.forEach(tenant => {
         const row = document.createElement('tr');
-
-        // Format status badge CSS class dynamically
         const statusClass = tenant.status && tenant.status.toLowerCase() === 'paid' ? 'paid' : 'overdue';
 
         row.innerHTML = `
@@ -48,13 +54,12 @@ export function renderTenantTable(tenants) {
                 <button class="btn-delete" data-id="${tenant.id}">Delete</button>
             </td>
         `;
-
         tableBody.appendChild(row);
     });
 }
 
 /**
- * Simple helper to prevent XSS / sanitize dynamic string text
+ * Helper to sanitize dynamic string text
  */
 function escapeHTML(str) {
     if (!str) return '';
@@ -67,9 +72,26 @@ function escapeHTML(str) {
 }
 
 /**
- * Renders residential defects data into the table body
+ * Renders residential defects data with matched tenant details and correct defect status.
  */
-export function renderDefectsTable(defects) {
+export function renderDefectsTable(defects, tenants = []) {
+    const tableContainer = document.querySelector('.tenant-table');
+    if (tableContainer) {
+        const thead = tableContainer.querySelector('thead');
+        if (thead) {
+            thead.innerHTML = `
+                <tr>
+                    <th>Unit Number</th>
+                    <th>Tenant Name</th>
+                    <th>Contact Details</th>
+                    <th>Active Defect</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            `;
+        }
+    }
+
     const tableBody = document.getElementById('tenant-table-body');
     if (!tableBody) return;
 
@@ -80,8 +102,15 @@ export function renderDefectsTable(defects) {
         return;
     }
 
+    // Normalizes unit strings like "Unit 01", "01", "1" -> "1"
+    const normalizeUnit = (u) => {
+        if (!u) return '';
+        return u.toString().replace(/unit/gi, '').trim().replace(/^0+/, '');
+    };
+
     defects.forEach(defect => {
-        const statusVal = defect.status ? defect.status.trim().toLowerCase() : '';
+        const rawStatus = defect.status ? defect.status.toString().trim() : 'Pending';
+        const statusVal = rawStatus.toLowerCase();
         
         let statusClass = 'overdue';
         if (statusVal === 'fixed') {
@@ -90,13 +119,21 @@ export function renderDefectsTable(defects) {
             statusClass = 'pending';
         }
 
+        const defectUnitClean = normalizeUnit(defect.unit);
+        const matchingTenant = tenants.find(t => normalizeUnit(t.unit) === defectUnitClean);
+
+        const tenantName = matchingTenant ? matchingTenant.name : 'Unassigned';
+        const contactDetails = matchingTenant ? matchingTenant.phone : '-';
+        const defectText = defect.description || defect.issue || defect.title || 'Reported Issue';
+
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>Unit ${escapeHTML(defect.unit)}</td>
-            <td colspan="2">${escapeHTML(defect.description)}</td>
-            <td>-</td>
+            <td>${escapeHTML(defect.unit.toString().replace(/unit/gi, '').trim())}</td>
+            <td>${escapeHTML(tenantName)}</td>
+            <td>${escapeHTML(contactDetails)}</td>
+            <td>${escapeHTML(defectText)}</td>
             <td>
-                <span class="status-badge ${statusClass}">${escapeHTML(defect.status)}</span>
+                <span class="status-badge ${statusClass}">${escapeHTML(rawStatus.toUpperCase())}</span>
             </td>
             <td>
                 <button class="btn-edit" data-id="${defect.id}">Edit</button>
@@ -107,6 +144,9 @@ export function renderDefectsTable(defects) {
     });
 }
 
+/**
+ * Updates top metrics summary cards on the dashboard
+ */
 export function updateDashboardStats(tenants, defects = []) {
     const safeTenants = tenants || [];
     const safeDefects = defects || [];
@@ -127,12 +167,12 @@ export function updateDashboardStats(tenants, defects = []) {
 
     const rentCollectedElement = document.getElementById('rent-collected-value');
     if (rentCollectedElement) {
-        rentCollectedElement.textContent = `KSh ${rentCollected.toLocaleString()}`;
+        rentCollectedElement.textContent = `KSH ${rentCollected.toLocaleString()}`;
     }
 
     const pendingArrearsElement = document.getElementById('pending-arrears-value');
     if (pendingArrearsElement) {
-        pendingArrearsElement.textContent = `KSh ${pendingArrears.toLocaleString()}`;
+        pendingArrearsElement.textContent = `KSH ${pendingArrears.toLocaleString()}`;
     }
 
     const activeDefectsElement = document.getElementById('active-defects-count');

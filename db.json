@@ -31,6 +31,14 @@
       "phone": "0123456789",
       "rentDueDate": "October 30, 2026",
       "status": "Overdue"
+    },
+    {
+      "unit": "05",
+      "name": "Mary Mwikhali",
+      "phone": "1234567890",
+      "rentDueDate": "November 22, 2026",
+      "status": "Paid",
+      "id": "e9NROaJRPJA"
     }
   ],
   "defects": [
@@ -38,13 +46,13 @@
       "id": "1",
       "unit": "01",
       "description": "Faulty tap",
-      "status": "Fixed"
+      "status": "FIXED"
     },
     {
       "id": "2",
       "unit": "02",
       "description": "Fix hot shower",
-      "status": "In Progress"
+      "status": "FIXED"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
