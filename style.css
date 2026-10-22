@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Changa+One:ital@0;1&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Libre+Caslon+Condensed:ital,wght@0,400..700;1,400..700&family=Outfit:wght@100..900&display=swap');
+
+/* ==========================================================================
+1. CSS Reset & Design Tokens...
+   ========================================================================== */
+
 /* ==========================================================================
    1. CSS Reset & Design Tokens (Color Palette: 3 Complementary + Neutrals)
    ========================================================================== */
@@ -24,8 +30,8 @@
     --sidebar-text: #f8fafc;
 
     /* Typography & Spacing */
-    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    --border-radius: 8px;
+    --font-family: 'Outfit', sans-serif, system-ui;
+    --border-radius: 10px;
     --transition-speed: 0.2s ease;
 }
 
@@ -36,7 +42,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--font-family);
     background-color: #f1f5f9;
     color: #000000;
     line-height: 1.5;
@@ -91,10 +97,9 @@ body {
     transition: all var(--transition-speed);
 }
 
-.nav-item:hover,
-.nav-item.active {
-    color: #ffffff;
-    background-color: rgba(255, 255, 255, 0.08);
+.nav-item:hover
+ {
+    color: #0b0000;
 }
 
 .nav-item.active {
@@ -129,13 +134,13 @@ body {
 .btn-primary {
     background-color: var(--primary-color);
     color: #ffffff;
-    border: none;
+    border: #000000;
     padding: 0.65rem 1.25rem;
-    border-radius: 2px;
+    border-radius: 5px;
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color var(--transition-speed);
+    transition: 2ms;
 }
 
 .btn-primary:hover {
