@@ -44,8 +44,8 @@ export function renderTenantTable(tenants) {
             <td>${escapeHTML(tenant.rentDueDate)}</td>
             <td><span class="status-badge ${statusClass}">${escapeHTML(tenant.status)}</span></td>
             <td>
-                <button class="btn-edit" data-id="${tenant.id}" style="padding: 4px 12px; margin-right: 5px; background: transparent; border: 1px solid var(--primary-color, #007bff); color: var(--primary-color, #007bff); border-radius: 50px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Edit</button>
-                <button class="btn-delete" data-id="${tenant.id}" style="padding: 4px 12px; background: transparent; border: 1px solid var(--danger-color, #dc3545); color: var(--danger-color, #dc3545); border-radius: 50px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Delete</button>
+                <button class="btn-edit" data-id="${tenant.id}">Edit</button>
+                <button class="btn-delete" data-id="${tenant.id}">Delete</button>
             </td>
         `;
 
@@ -99,8 +99,8 @@ export function renderDefectsTable(defects) {
                 <span class="status-badge ${statusClass}">${escapeHTML(defect.status)}</span>
             </td>
             <td>
-                <button class="btn-edit" data-id="${defect.id}" style="margin-right: 5px; background: none; border: none; color: var(--primary-color, #007bff); cursor: pointer; font-weight: 600;">Edit</button>
-                <button class="btn-delete" data-id="${defect.id}" style="background: none; border: none; color: var(--danger-color); cursor: pointer; font-weight: 600;">Delete</button>
+                <button class="btn-edit" data-id="${defect.id}">Edit</button>
+                <button class="btn-delete" data-id="${defect.id}">Delete</button>
             </td>
         `;
         tableBody.appendChild(row);
