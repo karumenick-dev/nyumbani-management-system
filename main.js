@@ -128,7 +128,7 @@ function setupEventListeners() {
                 }
             }
 
-            // 2. HANDLE EDIT (TENANT OR DEFECT)
+            // 2. HANDLE EDIT (TENANT, DEFECT, OR ARREARS)
             if (event.target.classList.contains('btn-edit')) {
                 const recordId = event.target.getAttribute('data-id');
                 const activeNav = document.querySelector('.nav-item.active');
@@ -161,29 +161,63 @@ function setupEventListeners() {
                                 alert("Invalid status! Please enter either 'FIXED' or 'IN PROGRESS'.");
                             }
                         }
+                    } else if (viewName.includes('Rent & Arrears')) {
+                        // --- EDIT RENT & ARREARS STATUS ONLY ---
+                        const tenants = await getTenants();
+                        const tenantToEdit = tenants.find(t => t.id.toString() === recordId.toString());
+
+                        if (!tenantToEdit) return;
+
+                        const newStatus = prompt(
+                            `Update Rent Status for Unit ${tenantToEdit.unit} (${tenantToEdit.name}):\nEnter status (Paid / Overdue):`,
+                            tenantToEdit.status || 'Paid'
+                        );
+
+                        if (newStatus !== null) {
+                            const trimmedStatus = newStatus.trim();
+                            const formattedStatus = trimmedStatus.charAt(0).toUpperCase() + trimmedStatus.slice(1).toLowerCase();
+                            
+                            if (formattedStatus === 'Paid' || formattedStatus === 'Overdue') {
+                                await updateTenant(recordId, { ...tenantToEdit, status: formattedStatus });
+                                
+                                // Refresh Rent & Arrears Table
+                                const updatedTenants = await getTenants();
+                                const arrearsTenants = updatedTenants.filter(t => t.status && t.status.toLowerCase() === 'overdue');
+                                const defects = await getDefects();
+                                renderTenantTable(arrearsTenants);
+                                updateDashboardStats(updatedTenants, defects);
+                            } else {
+                                alert("Invalid status! Please enter either 'Paid' or 'Overdue'.");
+                            }
+                        }
                     } else {
-                        // --- EDIT TENANT ROSTER ---
+                        // --- EDIT FULL TENANT ROSTER ---
                         const tenants = await getTenants();
                         const tenantToEdit = tenants.find(t => t.id.toString() === recordId.toString());
 
                         if (!tenantToEdit) return;
 
                         const newName = prompt("Edit Tenant Name:", tenantToEdit.name);
+                        if (newName === null) return;
+
                         const newPhone = prompt("Edit Phone Number:", tenantToEdit.phone);
+                        if (newPhone === null) return;
+
                         const newUnit = prompt("Edit Unit Number:", tenantToEdit.unit);
+                        if (newUnit === null) return;
+
                         const newStatus = prompt("Edit Status (Paid / Overdue):", tenantToEdit.status);
+                        if (newStatus === null) return;
 
-                        if (newName !== null && newPhone !== null && newUnit !== null && newStatus !== null) {
-                            const updatedData = {
-                                name: newName.trim(),
-                                phone: newPhone.trim(),
-                                unit: newUnit.trim(),
-                                status: newStatus.trim()
-                            };
+                        const updatedData = {
+                            name: newName.trim(),
+                            phone: newPhone.trim(),
+                            unit: newUnit.trim(),
+                            status: newStatus.trim()
+                        };
 
-                            await updateTenant(recordId, updatedData);
-                            await loadTenantData();
-                        }
+                        await updateTenant(recordId, updatedData);
+                        await loadTenantData();
                     }
                 } catch (error) {
                     console.error("Failed to update record:", error);
