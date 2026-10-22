@@ -259,8 +259,10 @@ body {
     color: var(--danger-color);
 }
 
-/* Custom Action Buttons (Pill / Oval Style) */
-actions.btn-edit {
+/* ==========================================================================
+   Custom Action Buttons (Pill / Oval Style)
+   ========================================================================== */
+.btn-edit {
     padding: 4px 12px;
     margin-right: 5px;
     background: rgba(0, 123, 255, 0.1);
@@ -293,6 +295,24 @@ actions.btn-edit {
 .btn-delete:hover {
     background: var(--danger-color, #dc3545);
     color: #fff;
+}
+
+/* ==========================================================================
+   Sidebar Icons Alignment
+   ========================================================================== */
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Spacing between the icon and text */
+}
+
+.nav-icon {
+    flex-shrink: 0;
+    opacity: 0.85;
+}
+
+.nav-item.active .nav-icon {
+    opacity: 1;
 }
 
 /* Responsive adjustments */
