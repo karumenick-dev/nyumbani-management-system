@@ -1,12 +1,5 @@
-/**
- * UI Module: Handles DOM rendering and updates for the application interface.
- */
-
-/**
- * Renders the tenant roster data into the HTML table body and sets headers.
- */
 export function renderTenantTable(tenants) {
-    // Control button visibility for Tenant Roster
+
     const addTenantBtn = document.getElementById('add-tenant-btn');
     const addDefectBtn = document.getElementById('add-defect-btn');
     if (addTenantBtn) addTenantBtn.style.display = 'inline-block';
@@ -64,9 +57,6 @@ export function renderTenantTable(tenants) {
     });
 }
 
-/**
- * Helper to sanitize dynamic string text
- */
 function escapeHTML(str) {
     if (!str) return '';
     return str.toString()
@@ -77,9 +67,6 @@ function escapeHTML(str) {
         .replace(/'/g, '&#039;');
 }
 
-/**
- * Renders residential defects data with matched tenant details and correct defect status.
- */
 export function renderDefectsTable(defects, tenants = []) {
     const tableContainer = document.querySelector('.tenant-table');
     if (tableContainer) {
@@ -150,9 +137,6 @@ export function renderDefectsTable(defects, tenants = []) {
     });
 }
 
-/**
- * Updates top metrics summary cards on the dashboard
- */
 export function updateDashboardStats(tenants, defects = []) {
     const safeTenants = tenants || [];
     const safeDefects = defects || [];

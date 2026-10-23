@@ -1,29 +1,13 @@
-/**
-- Main Entry Point: Initializes the Nyumbani Management System application,
-- fetches backend data via api.js, and binds UI event listeners.
- */
 import { renderTenantTable, renderDefectsTable, updateDashboardStats } from './ui.js';
 import { getTenants, addTenant, removeTenant, updateTenant, getDefects, removeDefect, updateDefect, addDefect } from './api.js';
 
-/**
-- Initialize application state on DOM content load
- */
 document.addEventListener('DOMContentLoaded', async () => {
     console.log("Nyumbani Management System initialized.");
-    
-    // 1. Load initial data from JSON Server and populate stats
     await loadAppData();
-
-    // 2. Set up event listeners for user actions
     setupEventListeners();
-
-    // 3. Enable sidebar interactivity
     setupSidebarNavigation();
 });
 
-/**
-- Fetch all tenants and defects from the API, render default view, and update stats
- */
 async function loadAppData() {
     try {
         const tenants = await getTenants();
@@ -31,7 +15,6 @@ async function loadAppData() {
         renderTenantTable(tenants);
         updateDashboardStats(tenants, defects);
 
-        // Ensure initial button visibility (Tenant Roster default)
         const addTenantBtn = document.getElementById('add-tenant-btn');
         const addDefectBtn = document.getElementById('add-defect-btn');
         if (addTenantBtn) addTenantBtn.style.display = 'inline-block';
@@ -51,11 +34,8 @@ async function loadAppData() {
     }
 }
 
-/**
-- Bind click events, form submissions, and interactive buttons
- */
+
 function setupEventListeners() {
-    // Handle Add Tenant button click
     const addTenantBtn = document.getElementById('add-tenant-btn');
     if (addTenantBtn) {
         addTenantBtn.addEventListener('click', async () => {
@@ -102,7 +82,6 @@ function setupEventListeners() {
         });
     }
 
-    // Handle Add Defect button click
     const addDefectBtn = document.getElementById('add-defect-btn');
     if (addDefectBtn) {
         addDefectBtn.addEventListener('click', async () => {
@@ -130,12 +109,10 @@ function setupEventListeners() {
         });
     }
 
-    // Handle Table Actions via Event Delegation
     const tableBody = document.getElementById('tenant-table-body');
     if (tableBody) {
         tableBody.addEventListener('click', async (event) => {
             
-            // 1. HANDLE TENANT / DEFECT DELETE
             if (event.target.classList.contains('btn-delete')) {
                 const recordId = event.target.getAttribute('data-id');
                 const activeNav = document.querySelector('.nav-item.active');
@@ -173,7 +150,6 @@ function setupEventListeners() {
                 }
             }
 
-            // 2. HANDLE EDIT (TENANT, DEFECT, OR ARREARS)
             if (event.target.classList.contains('btn-edit')) {
                 const recordId = event.target.getAttribute('data-id');
                 const activeNav = document.querySelector('.nav-item.active');
@@ -181,7 +157,6 @@ function setupEventListeners() {
 
                 try {
                     if (viewName.includes('Residential Defects')) {
-                        // --- EDIT RESIDENTIAL DEFECT STATUS ONLY ---
                         const defects = await getDefects();
                         const defectToEdit = defects.find(d => d.id.toString() === recordId.toString());
 
@@ -196,8 +171,7 @@ function setupEventListeners() {
                             const trimmedStatus = newStatus.trim().toUpperCase();
                             if (trimmedStatus === 'FIXED' || trimmedStatus === 'IN PROGRESS') {
                                 await updateDefect(recordId, { status: trimmedStatus });
-                                
-                                // Refresh Defects Table & Dashboard Stats
+
                                 const updatedDefects = await getDefects();
                                 const tenants = await getTenants();
                                 renderDefectsTable(updatedDefects, tenants);
@@ -207,7 +181,7 @@ function setupEventListeners() {
                             }
                         }
                     } else if (viewName.includes('Rent & Arrears')) {
-                        // --- EDIT RENT & ARREARS STATUS ONLY ---
+
                         const tenants = await getTenants();
                         const tenantToEdit = tenants.find(t => t.id.toString() === recordId.toString());
 
@@ -225,7 +199,6 @@ function setupEventListeners() {
                             if (formattedStatus === 'Paid' || formattedStatus === 'Overdue') {
                                 await updateTenant(recordId, { ...tenantToEdit, status: formattedStatus });
                                 
-                                // Refresh Rent & Arrears Table & Dashboard Stats
                                 const updatedTenants = await getTenants();
                                 const arrearsTenants = updatedTenants.filter(t => t.status && t.status.toLowerCase() === 'overdue');
                                 const defects = await getDefects();
@@ -236,7 +209,7 @@ function setupEventListeners() {
                             }
                         }
                     } else {
-                        // --- EDIT FULL TENANT ROSTER ---
+
                         const tenants = await getTenants();
                         const tenantToEdit = tenants.find(t => t.id.toString() === recordId.toString());
 
@@ -276,9 +249,6 @@ function setupEventListeners() {
     }
 }
 
-/**
-- Handle sidebar navigation clicks using innerText (ignores SVGs cleanly)
- */
 function setupSidebarNavigation() {
     const navItems = document.querySelectorAll('.nav-item');
     const pageTitle = document.querySelector('.page-title');
@@ -292,7 +262,6 @@ function setupSidebarNavigation() {
             navItems.forEach(nav => nav.classList.remove('active'));
             item.classList.add('active');
 
-            // innerText extracts ONLY visible link text, ignoring SVG tags cleanly
             const sectionName = item.innerText.trim();
 
             if (pageTitle) {
@@ -318,7 +287,6 @@ function setupSidebarNavigation() {
                     if (addDefectBtn) addDefectBtn.style.display = 'none';
                 }
 
-                // Update metrics summary cards across all views
                 updateDashboardStats(tenants, defects);
 
             } catch (error) {
