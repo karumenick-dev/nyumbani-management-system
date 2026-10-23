@@ -1,12 +1,12 @@
 /**
- * Main Entry Point: Initializes the Nyumbani Management System application,
- * fetches backend data via api.js, and binds UI event listeners.
+- Main Entry Point: Initializes the Nyumbani Management System application,
+- fetches backend data via api.js, and binds UI event listeners.
  */
 import { renderTenantTable, renderDefectsTable, updateDashboardStats } from './ui.js';
 import { getTenants, addTenant, removeTenant, updateTenant, getDefects, removeDefect, updateDefect, addDefect } from './api.js';
 
 /**
- * Initialize application state on DOM content load
+- Initialize application state on DOM content load
  */
 document.addEventListener('DOMContentLoaded', async () => {
     console.log("Nyumbani Management System initialized.");
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 /**
- * Fetch all tenants and defects from the API, render default view, and update stats
+- Fetch all tenants and defects from the API, render default view, and update stats
  */
 async function loadAppData() {
     try {
@@ -52,7 +52,7 @@ async function loadAppData() {
 }
 
 /**
- * Bind click events, form submissions, and interactive buttons
+- Bind click events, form submissions, and interactive buttons
  */
 function setupEventListeners() {
     // Handle Add Tenant button click
@@ -146,7 +146,10 @@ function setupEventListeners() {
                     const defects = await getDefects();
 
                     if (viewName.includes('Residential Defects')) {
-                        if (confirm(`Are you sure you want to delete this defect record?`)) {
+                        const defectToDelete = defects.find(d => d.id.toString() === recordId.toString());
+                        const defectDesc = defectToDelete ? `Unit ${defectToDelete.unit} (${defectToDelete.description})` : 'this defect record';
+
+                        if (confirm(`Are you sure you want to delete ${defectDesc}?`)) {
                             await removeDefect(recordId);
                             const updatedDefects = await getDefects();
                             const updatedTenants = await getTenants();
@@ -154,7 +157,10 @@ function setupEventListeners() {
                             updateDashboardStats(updatedTenants, updatedDefects);
                         }
                     } else {
-                        if (confirm(`Are you sure you want to delete tenant record ID ${recordId}?`)) {
+                        const tenantToDelete = tenants.find(t => t.id.toString() === recordId.toString());
+                        const tenantName = tenantToDelete ? tenantToDelete.name : `tenant record ID ${recordId}`;
+
+                        if (confirm(`Are you sure you want to delete ${tenantName}?`)) {
                             await removeTenant(recordId);
                             const updatedTenants = await getTenants();
                             const updatedDefects = await getDefects();
@@ -271,7 +277,7 @@ function setupEventListeners() {
 }
 
 /**
- * Handle sidebar navigation clicks using innerText (ignores SVGs cleanly)
+- Handle sidebar navigation clicks using innerText (ignores SVGs cleanly)
  */
 function setupSidebarNavigation() {
     const navItems = document.querySelectorAll('.nav-item');
