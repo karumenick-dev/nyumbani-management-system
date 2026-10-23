@@ -25,28 +25,28 @@
       "status": "Paid"
     },
     {
+      "id": "5",
       "unit": "05",
       "name": "Mary Mwikhali",
       "phone": "1234567890",
       "rentDueDate": "November 22, 2026",
-      "status": "Paid",
-      "id": "e9NROaJRPJA"
+      "status": "Paid"
     },
     {
+      "id": "6",
       "unit": "06",
       "name": "Nicole Baraza",
       "phone": "987654362",
       "rentDueDate": "November 30, 2026",
-      "status": "Paid",
-      "id": "N3D4hqSodB0"
+      "status": "Paid"
     },
     {
+      "id": "7",
       "unit": "07",
       "name": "Fidelis Wanja",
       "phone": "93646483328",
       "rentDueDate": "November 15, 2026",
-      "status": "Paid",
-      "id": "aWP-le6Tw6o"
+      "status": "Paid"
     }
   ],
   "defects": [
@@ -63,16 +63,16 @@
       "status": "FIXED"
     },
     {
+      "id": "2",
       "unit": "02",
       "description": "Faulty switch",
-      "status": "FIXED",
-      "id": "nPK6leMpLO4"
+      "status": "FIXED"
     },
     {
+      "id": "1",
       "unit": "01",
       "description": "Faulty sink",
-      "status": "Pending",
-      "id": "4cgo_jZqGQ4"
+      "status": "Pending"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
