@@ -63,16 +63,16 @@
       "status": "FIXED"
     },
     {
-      "unit": "03",
-      "description": "Faulty living room switch",
-      "status": "FIXED",
-      "id": "ClgsbWF5dQg"
-    },
-    {
       "unit": "02",
       "description": "Faulty switch",
-      "status": "Pending",
+      "status": "FIXED",
       "id": "nPK6leMpLO4"
+    },
+    {
+      "unit": "01",
+      "description": "Faulty sink",
+      "status": "Pending",
+      "id": "4cgo_jZqGQ4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
