@@ -16,24 +16,30 @@ https://github.com/karumenick-dev/nyumbani-management-system.git
 * Automated Testing: Unit and integration tests maintaining a minimum of 50% test coverage across key JavaScript functions.
 
 ## Technologies used
-* HTML5: Semantic markup for accessible, clean document structure without embedded script logic.
+* HTML: Semantic markup for accessible, clean document structure without embedded script logic.
 
-* CSS3: Responsive web design using media queries, modern layout systems, and custom color properties.
+* CSS: Responsive web design using media queries, modern layout systems, and custom color properties.
 
-* JavaScript (ES6+): Modular scripting handling DOM interactions, form validation, and asynchronous HTTP calls (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`).
+* JavaScript: Modular scripting handling DOM interactions, form validation, and asynchronous HTTP calls (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`).
 
 * JSON Server: Deployed mock REST API providing cloud-hosted data persistence across application reloads.
 
 * Git & GitHub: Version control utilizing feature branches, pull requests, a Project Board, and continuous deployment via GitHub Pages.
 
+* Testing: Unit tests are written using Node.js's native test runner (`node --test`) to verify API configurations, data schemas, and calculation logic.
+
+Run tests using:
+```bash
+npm test
+
 ## How to run it locally
 1. Open the terminal and clone the repository:
 
-   git clone https://github.com/[your-username]/[your-repository-name].git
+   git clone https://github.com/karumenick-dev/nyumbani-management-system.git
 
 2. Navigate into the project directory:
 
-   cd [your-repository-name]
+   cd nyumbani-management-system
 
 3. Install project dependencies:
 
@@ -46,5 +52,5 @@ https://github.com/karumenick-dev/nyumbani-management-system.git
 
 5. Open `index.html` in your web browser (or use the VS Code Live Server extension) to view the application live.
 
-## One or two sentences on what you learned
-Through this project, we deepened our understanding of RESTful API architecture, full CRUD operations, and modular JavaScript principles while maintaining clean separation of concerns. We also enhanced our collaborative Git workflow through branch-based development, automated testing, and designing structured UI layouts mapped directly from Figma wireframes.
+## One or two sentences on what I learned
+Through building this project, I strengthened my understanding of modular JavaScript organization. I also gained practical experience in how to use Figma for creating a wireframe for easier UI/UX design.
