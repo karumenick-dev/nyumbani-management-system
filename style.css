@@ -1,26 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Changa+One:ital@0;1&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Libre+Caslon+Condensed:ital,wght@0,400..700;1,400..700&family=Outfit:wght@100..900&display=swap');
 
-/* ==========================================================================
-1. CSS Reset & Design Tokens...
-   ========================================================================== */
-
-/* ==========================================================================
-   1. CSS Reset & Design Tokens (Color Palette: 3 Complementary + Neutrals)
-   ========================================================================== */
 :root {
-    /* Primary Color (Deep Trust Blue) */
     --primary-color: #2563eb;
     --primary-hover: #1d4ed8;
-    
-    /* Secondary / Status Colors (Teal/Green for Success, Amber/Red for Alerts) */
     --success-color: #10b981;
     --success-bg: #d1fae5;
-    
     --warning-color: #f59e0b;
     --danger-color: #dc2626;
     --danger-bg: #fee2e2;
-
-    /* Neutrals */
     --bg-main: #f8fafc;
     --bg-card: #ffffff;
     --text-primary: #1e293b;
@@ -28,8 +15,6 @@
     --border-color: #e2e8f0;
     --sidebar-bg: #1e293b;
     --sidebar-text: #f8fafc;
-
-    /* Typography & Spacing */
     --font-family: 'Outfit', sans-serif, system-ui;
     --border-radius: 10px;
     --transition-speed: 0.2s ease;
@@ -49,16 +34,12 @@ body {
     min-height: 100vh;
 }
 
-/* ==========================================================================
-   2. Main Layout Shell (Sidebar + Workspace Grid)
-   ========================================================================== */
 .app-container {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
 }
 
-/* Upper Sidebar Navigation */
 .sidebar {
     width: 100%;
     background-color: #b90000;
@@ -100,7 +81,7 @@ body {
     display: flex;
     text-align: center;
     align-items: center;
-    gap: 7px; /* space between house icon and text */
+    gap: 7px;
     flex-direction: row;
 }
 
@@ -135,7 +116,6 @@ body {
     background: white;
 }
 
-/* Main Workspace Area */
 .main-workspace {
     flex-grow: 1;
     padding: 32px 40px;
@@ -145,9 +125,6 @@ body {
     overflow-y: auto;
 }
 
-/* ==========================================================================
-   3. Top Header Bar
-   ========================================================================== */
 .top-header {
     display: flex;
     justify-content: space-between;
@@ -176,9 +153,6 @@ body {
     background-color: var(--primary-hover);
 }
 
-/* ==========================================================================
-   4. Top Metric Overview Cards (3-Column Grid)
-   ========================================================================== */
 .metrics-grid {
     display: flex;
     gap: 30px;
@@ -225,9 +199,6 @@ body {
     color: var(--warning-color);
 }
 
-/* ==========================================================================
-   5. Tenant Roster Data Table Section
-   ========================================================================== */
 .table-container {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -271,7 +242,6 @@ body {
     background-color: #f8fafc;
 }
 
-/* Status Badges */
 .status-badge {
     display: inline-block;
     padding: 4px 12px;
@@ -291,9 +261,6 @@ body {
     color: var(--danger-color);
 }
 
-/* ==========================================================================
-   Custom Action Buttons (Pill / Oval Style)
-   ========================================================================== */
 .btn-edit, 
 .btn-edit-defect {
     padding: 4px 12px;
@@ -333,13 +300,10 @@ body {
     color: #fff;
 }
 
-/* ==========================================================================
-   Sidebar Icons Alignment
-   ========================================================================== */
 .nav-item {
     display: flex;
     align-items: center;
-    gap: 10px; /* Spacing between the icon and text */
+    gap: 10px;
 }
 
 .nav-icon {
@@ -351,7 +315,6 @@ body {
     opacity: 1;
 }
 
-/* Responsive adjustments */
 @media (max-width: 1024px) {
     .metrics-grid {
         grid-template-columns: repeat(2, 1fr);
