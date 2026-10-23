@@ -30,7 +30,7 @@
       "name": "Moriah Evanilson",
       "phone": "0123456789",
       "rentDueDate": "October 30, 2026",
-      "status": "Overdue"
+      "status": "Paid"
     },
     {
       "unit": "05",
@@ -39,6 +39,14 @@
       "rentDueDate": "November 22, 2026",
       "status": "Paid",
       "id": "e9NROaJRPJA"
+    },
+    {
+      "unit": "06",
+      "name": "Nicole Baraza",
+      "phone": "987654362",
+      "rentDueDate": "November 30, 2026",
+      "status": "Paid",
+      "id": "N3D4hqSodB0"
     }
   ],
   "defects": [
@@ -53,6 +61,12 @@
       "unit": "02",
       "description": "Fix hot shower",
       "status": "FIXED"
+    },
+    {
+      "unit": "03",
+      "description": "Faulty living room switch",
+      "status": "FIXED",
+      "id": "ClgsbWF5dQg"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

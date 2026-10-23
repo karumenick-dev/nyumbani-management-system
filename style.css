@@ -58,7 +58,7 @@ body {
     flex-direction: column;
 }
 
-/* Left Sidebar Navigation */
+/* Upper Sidebar Navigation */
 .sidebar {
     width: 100%;
     background-color: #b90000;
@@ -79,9 +79,17 @@ body {
     letter-spacing: 0.05rem;
 }
 
-.nav-menu {
-    display: flex;
+.nav-links {
     flex-direction: row;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.nav-menu {
+    flex-direction: row;
+    display: flex;
     align-items: center;
     justify-content: center;
     gap: 2rem;
@@ -148,12 +156,14 @@ body {
 }
 
 /* ==========================================================================
-   4. Top Metric Overview Cards (4-Column Grid)
+   4. Top Metric Overview Cards (3-Column Grid)
    ========================================================================== */
 .metrics-grid {
     display: flex;
     gap: 4rem;
     flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.5rem;
     width: 100%;
     margin-bottom: 1.5rem;
 }
@@ -165,6 +175,7 @@ body {
     padding: 1.25rem;
     display: flex;
     flex-direction: row;
+    flex: 2;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;

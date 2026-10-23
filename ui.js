@@ -6,6 +6,12 @@
  * Renders the tenant roster data into the HTML table body and sets headers.
  */
 export function renderTenantTable(tenants) {
+    // Control button visibility for Tenant Roster
+    const addTenantBtn = document.getElementById('add-tenant-btn');
+    const addDefectBtn = document.getElementById('add-defect-btn');
+    if (addTenantBtn) addTenantBtn.style.display = 'inline-block';
+    if (addDefectBtn) addDefectBtn.style.display = 'none';
+
     const tableContainer = document.querySelector('.tenant-table');
     if (tableContainer) {
         const thead = tableContainer.querySelector('thead');
@@ -177,7 +183,13 @@ export function updateDashboardStats(tenants, defects = []) {
 
     const activeDefectsElement = document.getElementById('active-defects-count');
     if (activeDefectsElement) {
-        const defectCount = safeDefects.length;
+        // Exclude fixed defects so only active/unresolved ones are counted
+        const unresolvedDefects = safeDefects.filter(d => {
+            const status = d.status ? d.status.toString().trim().toLowerCase() : '';
+            return status !== 'fixed';
+        });
+        const defectCount = unresolvedDefects.length;
         activeDefectsElement.textContent = `${defectCount} ${defectCount === 1 ? 'Issue' : 'Issues'}`;
     }
 }
+

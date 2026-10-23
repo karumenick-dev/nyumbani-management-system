@@ -3,7 +3,7 @@
  * fetches backend data via api.js, and binds UI event listeners.
  */
 import { renderTenantTable, renderDefectsTable, updateDashboardStats } from './ui.js';
-import { getTenants, addTenant, removeTenant, updateTenant, getDefects, removeDefect, updateDefect } from './api.js';
+import { getTenants, addTenant, removeTenant, updateTenant, getDefects, removeDefect, updateDefect, addDefect } from './api.js';
 
 /**
  * Initialize application state on DOM content load
@@ -11,8 +11,8 @@ import { getTenants, addTenant, removeTenant, updateTenant, getDefects, removeDe
 document.addEventListener('DOMContentLoaded', async () => {
     console.log("Nyumbani Management System initialized.");
     
-    // 1. Load initial tenant data from JSON Server
-    await loadTenantData();
+    // 1. Load initial data from JSON Server and populate stats
+    await loadAppData();
 
     // 2. Set up event listeners for user actions
     setupEventListeners();
@@ -22,16 +22,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 /**
- * Fetch tenants from the API and update the UI table
+ * Fetch all tenants and defects from the API, render default view, and update stats
  */
-async function loadTenantData() {
+async function loadAppData() {
     try {
         const tenants = await getTenants();
         const defects = await getDefects();
         renderTenantTable(tenants);
         updateDashboardStats(tenants, defects);
+
+        // Ensure initial button visibility (Tenant Roster default)
+        const addTenantBtn = document.getElementById('add-tenant-btn');
+        const addDefectBtn = document.getElementById('add-defect-btn');
+        if (addTenantBtn) addTenantBtn.style.display = 'inline-block';
+        if (addDefectBtn) addDefectBtn.style.display = 'none';
     } catch (error) {
-        console.error("Failed to load tenant roster:", error);
+        console.error("Failed to load application data:", error);
         const tableBody = document.getElementById('tenant-table-body');
         if (tableBody) {
             tableBody.innerHTML = `
@@ -86,9 +92,40 @@ function setupEventListeners() {
 
             try {
                 await addTenant(newTenant);
-                await loadTenantData();
+                const tenants = await getTenants();
+                const defects = await getDefects();
+                renderTenantTable(tenants);
+                updateDashboardStats(tenants, defects);
             } catch (error) {
                 alert("Failed to add new tenant. Check console for details.");
+            }
+        });
+    }
+
+    // Handle Add Defect button click
+    const addDefectBtn = document.getElementById('add-defect-btn');
+    if (addDefectBtn) {
+        addDefectBtn.addEventListener('click', async () => {
+            const unit = prompt("Enter Unit Number (e.g., 01):");
+            if (!unit) return;
+            const description = prompt("Enter Defect Description (e.g., Faulty tap):");
+            if (!description) return;
+
+            const newDefect = {
+                unit: unit.trim(),
+                description: description.trim(),
+                status: "Pending"
+            };
+
+            try {
+                await addDefect(newDefect);
+                const defects = await getDefects();
+                const tenants = await getTenants();
+                renderDefectsTable(defects, tenants);
+                updateDashboardStats(tenants, defects);
+            } catch (error) {
+                console.error("Failed to add defect:", error);
+                alert("Failed to add defect. Check console for details.");
             }
         });
     }
@@ -104,27 +141,29 @@ function setupEventListeners() {
                 const activeNav = document.querySelector('.nav-item.active');
                 const viewName = activeNav ? activeNav.innerText.trim() : '';
 
-                if (viewName.includes('Residential Defects')) {
-                    if (confirm(`Are you sure you want to delete this defect record?`)) {
-                        try {
+                try {
+                    const tenants = await getTenants();
+                    const defects = await getDefects();
+
+                    if (viewName.includes('Residential Defects')) {
+                        if (confirm(`Are you sure you want to delete this defect record?`)) {
                             await removeDefect(recordId);
-                            const defects = await getDefects();
-                            const tenants = await getTenants();
-                            renderDefectsTable(defects, tenants);
-                            updateDashboardStats(tenants, defects);
-                        } catch (error) {
-                            alert("Failed to delete defect record.");
+                            const updatedDefects = await getDefects();
+                            const updatedTenants = await getTenants();
+                            renderDefectsTable(updatedDefects, updatedTenants);
+                            updateDashboardStats(updatedTenants, updatedDefects);
                         }
-                    }
-                } else {
-                    if (confirm(`Are you sure you want to delete tenant record ID ${recordId}?`)) {
-                        try {
+                    } else {
+                        if (confirm(`Are you sure you want to delete tenant record ID ${recordId}?`)) {
                             await removeTenant(recordId);
-                            await loadTenantData();
-                        } catch (error) {
-                            alert("Failed to delete tenant record.");
+                            const updatedTenants = await getTenants();
+                            const updatedDefects = await getDefects();
+                            renderTenantTable(updatedTenants);
+                            updateDashboardStats(updatedTenants, updatedDefects);
                         }
                     }
+                } catch (error) {
+                    alert("Failed to delete record.");
                 }
             }
 
@@ -152,7 +191,7 @@ function setupEventListeners() {
                             if (trimmedStatus === 'FIXED' || trimmedStatus === 'IN PROGRESS') {
                                 await updateDefect(recordId, { status: trimmedStatus });
                                 
-                                // Refresh Defects Table
+                                // Refresh Defects Table & Dashboard Stats
                                 const updatedDefects = await getDefects();
                                 const tenants = await getTenants();
                                 renderDefectsTable(updatedDefects, tenants);
@@ -180,7 +219,7 @@ function setupEventListeners() {
                             if (formattedStatus === 'Paid' || formattedStatus === 'Overdue') {
                                 await updateTenant(recordId, { ...tenantToEdit, status: formattedStatus });
                                 
-                                // Refresh Rent & Arrears Table
+                                // Refresh Rent & Arrears Table & Dashboard Stats
                                 const updatedTenants = await getTenants();
                                 const arrearsTenants = updatedTenants.filter(t => t.status && t.status.toLowerCase() === 'overdue');
                                 const defects = await getDefects();
@@ -217,7 +256,10 @@ function setupEventListeners() {
                         };
 
                         await updateTenant(recordId, updatedData);
-                        await loadTenantData();
+                        const updatedTenants = await getTenants();
+                        const defects = await getDefects();
+                        renderTenantTable(updatedTenants);
+                        updateDashboardStats(updatedTenants, defects);
                     }
                 } catch (error) {
                     console.error("Failed to update record:", error);
@@ -234,6 +276,8 @@ function setupEventListeners() {
 function setupSidebarNavigation() {
     const navItems = document.querySelectorAll('.nav-item');
     const pageTitle = document.querySelector('.page-title');
+    const addTenantBtn = document.getElementById('add-tenant-btn');
+    const addDefectBtn = document.getElementById('add-defect-btn');
 
     navItems.forEach(item => {
         item.addEventListener('click', async (e) => {
@@ -246,7 +290,7 @@ function setupSidebarNavigation() {
             const sectionName = item.innerText.trim();
 
             if (pageTitle) {
-                pageTitle.textContent = sectionName === 'Dashboard' ? 'Dashboard Overview' : sectionName;
+                pageTitle.textContent = sectionName;
             }
 
             try {
@@ -255,15 +299,22 @@ function setupSidebarNavigation() {
 
                 if (sectionName.includes('Residential Defects')) {
                     renderDefectsTable(defects, tenants);
-                    updateDashboardStats(tenants, defects); 
+                    if (addTenantBtn) addTenantBtn.style.display = 'none';
+                    if (addDefectBtn) addDefectBtn.style.display = 'inline-block';
                 } else if (sectionName.includes('Rent & Arrears')) {
                     const arrearsTenants = tenants.filter(t => t.status && t.status.toLowerCase() === 'overdue');
                     renderTenantTable(arrearsTenants);
-                    updateDashboardStats(tenants, defects);
+                    if (addTenantBtn) addTenantBtn.style.display = 'none';
+                    if (addDefectBtn) addDefectBtn.style.display = 'none';
                 } else {
                     renderTenantTable(tenants);
-                    updateDashboardStats(tenants, defects);
+                    if (addTenantBtn) addTenantBtn.style.display = 'inline-block';
+                    if (addDefectBtn) addDefectBtn.style.display = 'none';
                 }
+
+                // Update metrics summary cards across all views
+                updateDashboardStats(tenants, defects);
+
             } catch (error) {
                 console.error(`Failed to load view for ${sectionName}:`, error);
             }
