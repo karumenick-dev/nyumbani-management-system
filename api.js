@@ -45,7 +45,7 @@ export async function updateTenant(id, updateData) {
 
 export async function updateDefect(id, updateData) {
     return await request(`/defects/${id}`, {
-        method: 'PATCH',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
