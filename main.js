@@ -228,6 +228,7 @@ function setupEventListeners() {
                         if (newStatus === null) return;
 
                         const updatedData = {
+                            ...tenantToEdit,
                             name: newName.trim(),
                             phone: newPhone.trim(),
                             unit: newUnit.trim(),
