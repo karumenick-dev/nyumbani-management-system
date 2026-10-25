@@ -224,6 +224,9 @@ function setupEventListeners() {
                         const newUnit = prompt("Edit Unit Number:", tenantToEdit.unit);
                         if (newUnit === null) return;
 
+                        const newRentDueDate = prompt("Edit Rent Due Date (e.g., Oct 31, 2026):", tenantToEdit.rentDueDate || "Pending");
+                        if (newRentDueDate === null) return;
+
                         const newStatus = prompt("Edit Status (Paid / Overdue):", tenantToEdit.status);
                         if (newStatus === null) return;
 
@@ -232,6 +235,7 @@ function setupEventListeners() {
                             name: newName.trim(),
                             phone: newPhone.trim(),
                             unit: newUnit.trim(),
+                            rentDueDate: newRentDueDate.trim(),
                             status: newStatus.trim()
                         };
 
