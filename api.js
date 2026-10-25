@@ -1,4 +1,4 @@
-const BASE_URL = 'http://127.0.0.1:8080';
+const BASE_URL = 'https://6ade2a514e88f1bba4a4fd89.mockapi.io/api/v1';
 
 async function request(endpoint, options = {}) {
     try {
@@ -74,17 +74,7 @@ export async function addDefect(defectData) {
 }
 
 export async function removeDefect(id) {
-    try {
-        const response = await fetch(`http://localhost:8080/defects/${id}`, {
-            method: 'DELETE',
-        });
-        
-        if (!response.ok) 
-            throw new Error(`Failed to delete defect. Status: ${response.status}`);
-        
-        return await response.json();
-    } catch (error) {
-        console.error(`Error deleting defect ID ${id}:`, error);
-        throw error;
-    }
+    return await request(`/defects/${id}`, {
+        method: 'DELETE',
+    });
 }
