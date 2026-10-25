@@ -1,5 +1,8 @@
 export function renderTenantTable(tenants) {
+    tenants.sort((a, b) => parseInt(a.unit, 10) - parseInt(b.unit, 10));
 
+    const tableBody = document.getElementById('tenant-table-body');
+    if (!tableBody) return;
     const addTenantBtn = document.getElementById('add-tenant-btn');
     const addDefectBtn = document.getElementById('add-defect-btn');
     if (addTenantBtn) addTenantBtn.style.display = 'inline-block';
