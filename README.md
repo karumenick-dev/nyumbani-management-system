@@ -53,4 +53,7 @@ npm test
 5. Open `index.html` in your web browser (or use the VS Code Live Server extension) to view the application live.
 
 ## One or two sentences on what I learned
-Through building this project, I strengthened my understanding of modular JavaScript organization. I also gained practical experience in how to use Figma for creating a wireframe for easier UI/UX design.
+Through building this project, I strengthened my understanding of modular JavaScript organization. I also gained practical experience in how to use Figma to create a wireframe for easier UI/UX design.
+
+## Figma Wireframe Link
+https://www.figma.com/design/emC9kqHzezsVF5YfujKMN5/Nyumbani-Management-System-Wireframe?node-id=0-1&t=V7JVk58ssecwNgau-1
