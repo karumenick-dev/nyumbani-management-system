@@ -35,7 +35,7 @@ export async function addTenant(tenantData) {
 
 export async function updateTenant(id, updateData) {
     return await request(`/tenants/${id}`, {
-        method: 'PATCH',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
