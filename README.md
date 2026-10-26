@@ -62,3 +62,6 @@ Through building this project, I strengthened my understanding of modular JavaSc
 
 ## Figma Wireframe Link
 https://www.figma.com/design/emC9kqHzezsVF5YfujKMN5/Nyumbani-Management-System-Wireframe?node-id=0-1&t=V7JVk58ssecwNgau-1
+
+## Google Slides Link
+https://docs.google.com/presentation/d/15TkdSYiSR2m42_0L2r-Pal7Rv3eMIXnYcswbI04Fcaw/edit?slide=id.p1#slide=id.p1
